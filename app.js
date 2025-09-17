@@ -1,16 +1,17 @@
-const API_BASE = "https://your-flask-domain.com"; // Replace with your backend URL
+const API_BASE = "https://your-flask-domain.com"; // Set your backend, or keep blank for static demo
 
 let isLoading = false;
 
-// Hide intro overlay after 5 seconds and show main UI
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('year').textContent = new Date().getFullYear();
   setupEventListeners();
-  setupAccessibility();
 
   setTimeout(() => {
     const intro = document.getElementById('intro-screen');
-    if (intro) intro.style.display = 'none';
+    if (intro) {
+      intro.classList.add('fade-out');
+      setTimeout(() => { intro.style.display = 'none'; }, 1200);
+    }
   }, 5000);
 });
 
@@ -38,15 +39,7 @@ function setupEventListeners() {
   });
 }
 
-function setupAccessibility() {
-  const queryInput = document.getElementById('queryInput');
-  queryInput.setAttribute('aria-describedby', 'search-help');
-  const loading = document.getElementById('loading');
-  const srOnly = document.createElement('span');
-  srOnly.className = 'sr-only';
-  srOnly.textContent = 'Searching for medical information...';
-  loading.appendChild(srOnly);
+function handleSearch() {
+  // Yahan apna fetch/AI logic daalna hai -- jaise pehle diya tha.
+  // Agar local ya static chahiye, to placeholder text laa sakte ho.
 }
-
-// Handle AI search and image as before...
-// All code for async search, loading state, debounce etc. from previous version
