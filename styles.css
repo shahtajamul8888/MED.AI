@@ -1,58 +1,71 @@
-body {
-  font-family: Inter, Arial, sans-serif;
-  margin: 0;
-  background: #f7fafc;
-  color: #111;
-}
-
-header {
-  background: linear-gradient(90deg, #0066cc, #00aaff);
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 0 16px;
-}
-
-.search-box {
+/* Cinematic Intro Overlay */
+#intro-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100vh;
+  background: linear-gradient(135deg,#071952 10%,#00c6ff 90%);
+  z-index: 9999;
   display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
+  animation: introFadeOut 1s 4s forwards;
 }
 
-.search-box input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+.intro-content {
+  text-align: center;
+  width: 100%;
 }
 
-.search-box button {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #0066cc;
-  color: white;
-  cursor: pointer;
-}
-
-.articles-list .card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
+.intro-main {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 2.7em;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 4px;
   margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-shadow: 0 0 40px #00eaff, 0 0 8px #006ccf;
+  animation: cinematicIn 1.3s cubic-bezier(.09,1.02,.38,1.03) both;
 }
 
-.articles-list h2 {
-  margin: 0;
+.intro-sub {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 1.4em;
+  font-weight: 900;
+  color: #00eaff;
+  text-shadow: 0 0 18px #00eaff33, 0 0 6px #0099cc44;
+  animation: fadeInUp .9s 1s both;
 }
 
-.meta {
+@keyframes cinematicIn {
+  from { opacity: 0; transform: scale(0.85) translateY(80px);}
+  to   { opacity: 1; transform: scale(1) translateY(0);}
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+@keyframes introFadeOut {
+  to { opacity: 0; pointer-events: none; visibility: hidden; }
+}
+
+/* Developer Credit + All other site styles (as previously given) */
+.developer-credit {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  background: rgba(0, 200, 255, 0.15);
+  color: #00c8ff;
+  padding: 8px 12px;
+  border-radius: 20px;
   font-size: 0.85rem;
-  color: #666;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 200, 255, 0.3);
+  z-index: 1000;
+  animation: glow 2s infinite alternate;
 }
+@keyframes glow {
+  from { box-shadow: 0 0 10px rgba(0, 200, 255, 0.3); }
+  to { box-shadow: 0 0 20px rgba(0, 200, 255, 0.6); }
+}
+
+/* ...rest of your previous CSS code below here, unchanged ... */
