@@ -8,14 +8,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: introFadeOut 1s 4s forwards;
+  transition: opacity 1s;
 }
-
 .intro-content {
   text-align: center;
   width: 100%;
 }
-
 .intro-main {
   font-family: 'Inter', Arial, sans-serif;
   font-size: 2.7em;
@@ -26,7 +24,6 @@
   text-shadow: 0 0 40px #00eaff, 0 0 8px #006ccf;
   animation: cinematicIn 1.3s cubic-bezier(.09,1.02,.38,1.03) both;
 }
-
 .intro-sub {
   font-family: 'Inter', Arial, sans-serif;
   font-size: 1.4em;
@@ -35,7 +32,6 @@
   text-shadow: 0 0 18px #00eaff33, 0 0 6px #0099cc44;
   animation: fadeInUp .9s 1s both;
 }
-
 @keyframes cinematicIn {
   from { opacity: 0; transform: scale(0.85) translateY(80px);}
   to   { opacity: 1; transform: scale(1) translateY(0);}
@@ -44,11 +40,9 @@
   from { opacity: 0; transform: translateY(30px);}
   to   { opacity: 1; transform: translateY(0);}
 }
-@keyframes introFadeOut {
-  to { opacity: 0; pointer-events: none; visibility: hidden; }
-}
+#intro-screen.fade-out { opacity: 0; pointer-events: none; visibility: hidden; }
 
-/* Developer Credit + All other site styles (as previously given) */
+/* Developer Credit */
 .developer-credit {
   position: fixed;
   top: 12px;
@@ -68,4 +62,12 @@
   to { box-shadow: 0 0 20px rgba(0, 200, 255, 0.6); }
 }
 
-/* ...rest of your previous CSS code below here, unchanged ... */
+/* --- Rest of site styles --- */
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background: #11131a;
+  color: #f4f7fa;
+  margin: 0;
+  min-height: 100vh;
+}
+/* Copy the rest of the modern CSS for header, button, nav, card, mobile etc from previous answer */
