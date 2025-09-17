@@ -3,7 +3,6 @@ from flask_cors import CORS
 import os
 import openai
 import requests
-import json
 import time
 from functools import wraps
 import logging
@@ -19,7 +18,6 @@ CORS(app)
 # API keys from environment
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 PERPLEXITY_API_KEY = os.getenv('PERPLEXITY_API_KEY')
-SERPER_API_KEY = os.getenv('SERPER_API_KEY')
 GOOGLE_CSE_ID = os.getenv('GOOGLE_CSE_ID')
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
@@ -164,5 +162,4 @@ def internal_error(e):
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8000))
-    debug = os.environ.get('FLASK_ENV') == 'development'
-    app.run(host='0.0.0.0', port=port, debug=debug, threaded=True)
+    app.run(host='0.0.0.0', port=port, debug=True, threaded=True)
