@@ -2,31 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MED.AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MED.AI – Your Personal Medical Assistant</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Hero Section -->
-  <header class="hero">
+  <!-- Cinematic Landing Section -->
+  <header id="hero" class="hero-section slideshow">
     <div class="overlay"></div>
     <div class="hero-content">
-      <h1>Welcome to <span class="glow">MED.AI</span></h1>
-      <p>Your AI-powered Medical Assistant</p>
-      <a href="#chat" class="cta-btn">Start Chat</a>
+      <h1>
+        <span class="glow">MED.AI</span>
+      </h1>
+      <p class="subtitle">Your Personal AI-Powered Medical Assistant</p>
+      <p class="disclaimer">⚠️ Educational use only. Not a replacement for medical advice.</p>
+      <a href="#chat-section" class="cta-btn">Start Chat</a>
     </div>
   </header>
 
   <!-- Chat Section -->
-  <section id="chat" class="chat-container">
-    <h2>Chat with MED.AI 🤖</h2>
+  <main id="chat-section" class="chat-container">
+    <h2>Chat with MED.AI <span style="font-size:24px;">🤖</span></h2>
     <div id="chat-box"></div>
+    <div id="typing-indicator" class="typing-indicator hidden">MED.AI is typing…</div>
     <div class="input-area">
-      <input type="text" id="user-input" placeholder="Ask me anything about health...">
+      <input type="text" id="user-input" placeholder="Ask about symptoms, advice, or more…">
       <button onclick="sendMessage()">Send</button>
+      <button onclick="generateImage()" class="generate-img-btn">Explain with Diagram</button>
     </div>
+    <div id="recent-questions">
+      <h3>Recent Popular Questions</h3>
+      <ul>
+        <li onclick="quickAsk('What is fever?')">What is fever?</li>
+        <li onclick="quickAsk('How to treat headache?')">How to treat headache?</li>
+        <li onclick="quickAsk('What are COVID symptoms?')">What are COVID symptoms?</li>
+        <li onclick="quickAsk('When to visit a doctor?')">When to visit a doctor?</li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- Extra Sections -->
+  <section class="about-section">
+    <h3>About MED.AI</h3>
+    <p>
+      MED.AI is designed to assist with common health questions and provide educational support using artificial intelligence. It's optimized for easy use on mobile and desktop devices.
+    </p>
   </section>
+
+  <section class="disclaimer-section">
+    <h3>Disclaimer</h3>
+    <p>
+      ⚠️ All responses from MED.AI are for informational purposes only and do not constitute medical advice. For urgent or serious symptoms, consult a healthcare professional.
+    </p>
+  </section>
+
+  <section class="contact-section">
+    <h3>Contact Us</h3>
+    <form id="contact-form" onsubmit="handleContact(event)">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea placeholder="Message" rows="3" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+    <div id="contact-status"></div>
+  </section>
+
+  <footer>
+    © 2025 MED.AI | Developer TajamuI
+  </footer>
 
   <script src="script.js"></script>
 </body>
