@@ -1,207 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MED.AI – Your Medical Assistant</title>
-  <style>
-    /* Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body, html {
-      height: 100%;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
-
-    /* 🔹 Background slideshow */
-    .slideshow {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .slideshow img {
-      position: absolute;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 2s ease-in-out;
-    }
-
-    .slideshow img.active {
-      opacity: 1;
-    }
-
-    /* 🔹 Header */
-    header {
-      text-align: center;
-      color: white;
-      padding: 1rem;
-      background: rgba(0,0,0,0.5);
-      font-size: 1.2rem;
-    }
-
-    /* 🔹 Chat container */
-    .chat-container {
-      width: 90%;
-      max-width: 700px;
-      margin: 2rem auto;
-      background: rgba(255,255,255,0.9);
-      border-radius: 12px;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      height: 75vh;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-    }
-
-    .messages {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-    }
-
-    .message {
-      margin-bottom: 1rem;
-      padding: 0.8rem 1rem;
-      border-radius: 10px;
-      max-width: 75%;
-      line-height: 1.4;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .user {
-      background: #3498db;
-      color: white;
-      align-self: flex-end;
-    }
-
-    .ai {
-      background: #ecf0f1;
-      color: #2c3e50;
-      align-self: flex-start;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* 🔹 Input area */
-    .input-area {
-      display: flex;
-      border-top: 1px solid #ddd;
-      background: white;
-    }
-
-    .input-area input {
-      flex: 1;
-      padding: 1rem;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-    }
-
-    .input-area button {
-      background: #27ae60;
-      color: white;
-      border: none;
-      padding: 1rem 1.5rem;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .input-area button:hover {
-      background: #219150;
-    }
-
-    /* Scrollbar styling */
-    .messages::-webkit-scrollbar {
-      width: 8px;
-    }
-    .messages::-webkit-scrollbar-thumb {
-      background: #bbb;
-      border-radius: 4px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MED.AI</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Background Slideshow -->
-  <div class="slideshow">
-    <img src="https://images.unsplash.com/photo-1580281657521-6c2c9a02e41b" class="active">
-    <img src="https://images.unsplash.com/photo-1588776814546-ec1c7f0b4c48">
-    <img src="https://images.unsplash.com/photo-1576765607924-b3d0ff9d9b88">
-    <img src="https://images.unsplash.com/photo-1588776814831-cf3eb8932e8f">
-  </div>
 
-  <!-- Header -->
-  <header>
-    <h1>🤖 MED.AI – Your Medical Assistant</h1>
-    <p>Get instant AI-powered answers (⚠️ Educational purposes only)</p>
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Welcome to <span class="glow">MED.AI</span></h1>
+      <p>Your AI-powered Medical Assistant</p>
+      <a href="#chat" class="cta-btn">Start Chat</a>
+    </div>
   </header>
 
-  <!-- Chat Box -->
-  <div class="chat-container">
-    <div class="messages" id="messages"></div>
-
+  <!-- Chat Section -->
+  <section id="chat" class="chat-container">
+    <h2>Chat with MED.AI 🤖</h2>
+    <div id="chat-box"></div>
     <div class="input-area">
-      <input type="text" id="userInput" placeholder="Type your question..." />
+      <input type="text" id="user-input" placeholder="Ask me anything about health...">
       <button onclick="sendMessage()">Send</button>
     </div>
-  </div>
+  </section>
 
-  <script>
-    /* 🔹 Background Slideshow Script */
-    const slides = document.querySelectorAll(".slideshow img");
-    let currentSlide = 0;
-
-    function changeSlide() {
-      slides[currentSlide].classList.remove("active");
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add("active");
-    }
-    setInterval(changeSlide, 5000); // 5 sec per slide
-
-    /* 🔹 Chat Functionality */
-    const messagesDiv = document.getElementById("messages");
-
-    function addMessage(text, sender) {
-      const msg = document.createElement("div");
-      msg.classList.add("message", sender);
-      msg.innerText = text;
-      messagesDiv.appendChild(msg);
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    }
-
-    async function sendMessage() {
-      const input = document.getElementById("userInput");
-      const text = input.value.trim();
-      if (!text) return;
-
-      addMessage(text, "user");
-      input.value = "";
-
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question: text })
-        });
-
-        const data = await res.json();
-        if (data.answer) {
-          addMessage(data.answer, "ai");
-        } else {
-          addMessage("❌ Error: " + (data.error || "Something went wrong"), "ai");
-        }
-      } catch (err) {
-        addMessage("⚠️ Failed to connect to backend", "ai");
-      }
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
