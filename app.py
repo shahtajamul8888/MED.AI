@@ -1,11 +1,10 @@
-
-
 from flask import Flask, request, jsonify
 import os
 import time
 
 app = Flask(__name__)
 
+# Home route
 @app.route('/')
 def home():
     return jsonify({
@@ -14,6 +13,7 @@ def home():
         "timestamp": time.time()
     })
 
+# Test route
 @app.route('/api/hello')
 def hello():
     name = request.args.get('name', 'Guest')
@@ -22,32 +22,21 @@ def hello():
         "note": "This is a test API endpoint running on Render"
     })
 
+# Example AI route (dummy for now)
+@app.route('/api/ask', methods=['POST'])
+def ask_ai():
+    data = request.get_json()
+    question = data.get("question", "")
+
+    if not question:
+        return jsonify({"error": "Question required"}), 400
+
+    # Dummy AI response
+    answer = f"AI response for: {question}"
+
+    return jsonify({"question": question, "answer": answer})
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
-
----
-
-📌 Procfile
-
-web: gunicorn main:app
-
-
----
-
-📌 requirements.txt
-
-flask
-gunicorn
-
-
----
-
-⚡ Bas itna rakhna hai. Deploy kar → Render pe test kar:
-
-/ pe → "Flask app is running on Render 🚀"
-
-/api/hello?name=Tajamul pe → "Hello, Tajamul!"
-
-
