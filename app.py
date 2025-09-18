@@ -51,8 +51,3 @@ gunicorn
 /api/hello?name=Tajamul pe → "Hello, Tajamul!"
 
 
-
----
-
-👉 Ab tu bata: iske baad tu sirf test app chalana chahta hai ya apna bada wala AI project bhi isi main.py me dalna hai?
-
