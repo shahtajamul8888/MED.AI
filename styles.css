@@ -1,73 +1,133 @@
-/* Cinematic Intro Overlay */
-#intro-screen {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  width: 100vw; height: 100vh;
-  background: linear-gradient(135deg,#071952 10%,#00c6ff 90%);
-  z-index: 9999;
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 1s;
-}
-.intro-content {
   text-align: center;
+  background-size: cover;
+  background-position: center;
+  animation: bgChange 20s infinite;
+}
+
+@keyframes bgChange {
+  0% { background-image: url('https://picsum.photos/id/1011/1920/1080'); }
+  25% { background-image: url('https://picsum.photos/id/1015/1920/1080'); }
+  50% { background-image: url('https://picsum.photos/id/1021/1920/1080'); }
+  75% { background-image: url('https://picsum.photos/id/1025/1920/1080'); }
+  100% { background-image: url('https://picsum.photos/id/1011/1920/1080'); }
+}
+
+.overlay {
+  position: absolute;
   width: 100%;
-}
-.intro-main {
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 2.7em;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 4px;
-  margin-bottom: 16px;
-  text-shadow: 0 0 40px #00eaff, 0 0 8px #006ccf;
-  animation: cinematicIn 1.3s cubic-bezier(.09,1.02,.38,1.03) both;
-}
-.intro-sub {
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 1.4em;
-  font-weight: 900;
-  color: #00eaff;
-  text-shadow: 0 0 18px #00eaff33, 0 0 6px #0099cc44;
-  animation: fadeInUp .9s 1s both;
-}
-@keyframes cinematicIn {
-  from { opacity: 0; transform: scale(0.85) translateY(80px);}
-  to   { opacity: 1; transform: scale(1) translateY(0);}
-}
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px);}
-  to   { opacity: 1; transform: translateY(0);}
-}
-#intro-screen.fade-out { opacity: 0; pointer-events: none; visibility: hidden; }
-
-/* Developer Credit */
-.developer-credit {
-  position: fixed;
-  top: 12px;
-  right: 16px;
-  background: rgba(0, 200, 255, 0.15);
-  color: #00c8ff;
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 200, 255, 0.3);
-  z-index: 1000;
-  animation: glow 2s infinite alternate;
-}
-@keyframes glow {
-  from { box-shadow: 0 0 10px rgba(0, 200, 255, 0.3); }
-  to { box-shadow: 0 0 20px rgba(0, 200, 255, 0.6); }
+  height: 100%;
+  background: rgba(0,0,0,0.6);
 }
 
-/* --- Rest of site styles --- */
-body {
-  font-family: 'Inter', Arial, sans-serif;
-  background: #11131a;
-  color: #f4f7fa;
-  margin: 0;
-  min-height: 100vh;
+.hero-content {
+  position: relative;
+  z-index: 2;
 }
-/* Copy the rest of the modern CSS for header, button, nav, card, mobile etc from previous answer */
+
+.glow {
+  color: #38bdf8;
+  text-shadow: 0 0 15px #38bdf8, 0 0 25px #0ea5e9;
+}
+
+.cta-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 25px;
+  border-radius: 8px;
+  background: #38bdf8;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.cta-btn:hover {
+  background: #0ea5e9;
+}
+
+/* Chat Section */
+.chat-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+}
+
+#chat-box {
+  height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  background: #0f172a;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.message {
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 80%;
+}
+
+.user {
+  background: #2563eb;
+  margin-left: auto;
+  text-align: right;
+}
+
+.bot {
+  background: #10b981;
+  margin-right: auto;
+  text-align: left;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #38bdf8;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0ea5e9;
+}
