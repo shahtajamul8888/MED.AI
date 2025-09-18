@@ -3,93 +3,205 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MED.AI – Medical Research Hub</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <title>MED.AI – Your Medical Assistant</title>
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    /* 🔹 Background slideshow */
+    .slideshow {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .slideshow img {
+      position: absolute;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    .slideshow img.active {
+      opacity: 1;
+    }
+
+    /* 🔹 Header */
+    header {
+      text-align: center;
+      color: white;
+      padding: 1rem;
+      background: rgba(0,0,0,0.5);
+      font-size: 1.2rem;
+    }
+
+    /* 🔹 Chat container */
+    .chat-container {
+      width: 90%;
+      max-width: 700px;
+      margin: 2rem auto;
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      height: 75vh;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      max-width: 75%;
+      line-height: 1.4;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .user {
+      background: #3498db;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .ai {
+      background: #ecf0f1;
+      color: #2c3e50;
+      align-self: flex-start;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 🔹 Input area */
+    .input-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+      background: white;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .input-area button {
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .input-area button:hover {
+      background: #219150;
+    }
+
+    /* Scrollbar styling */
+    .messages::-webkit-scrollbar {
+      width: 8px;
+    }
+    .messages::-webkit-scrollbar-thumb {
+      background: #bbb;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Cinematic Intro Overlay -->
-  <div id="intro-screen">
-    <div class="intro-content">
-      <div class="intro-main"><strong>Welcome MED.AI</strong></div>
-      <div class="intro-sub"><strong>Developed By Tajamul</strong></div>
-    </div>
+  <!-- Background Slideshow -->
+  <div class="slideshow">
+    <img src="https://images.unsplash.com/photo-1580281657521-6c2c9a02e41b" class="active">
+    <img src="https://images.unsplash.com/photo-1588776814546-ec1c7f0b4c48">
+    <img src="https://images.unsplash.com/photo-1576765607924-b3d0ff9d9b88">
+    <img src="https://images.unsplash.com/photo-1588776814831-cf3eb8932e8f">
   </div>
 
-  <!-- Developer Credit -->
-  <div class="developer-credit">
-    🖥️<strong>Developed by Tajamul</strong>
-  </div>
-
+  <!-- Header -->
   <header>
-    <div class="container">
-      <h1 class="logo-glow">MED.AI</h1>
-      <p class="subtitle">Instant AI-powered medical research, answers, and visual insights for healthcare professionals and students</p>
-    </div>
+    <h1>🤖 MED.AI – Your Medical Assistant</h1>
+    <p>Get instant AI-powered answers (⚠️ Educational purposes only)</p>
   </header>
 
-  <main class="container">
-    <nav class="quick-nav">
-      <button class="nav-btn active" data-mode="search">🔍 AI Search</button>
-      <button class="nav-btn" data-mode="research">📚 Research Hub</button>
-      <button class="nav-btn" data-mode="tools">🛠️ Tools</button>
-    </nav>
+  <!-- Chat Box -->
+  <div class="chat-container">
+    <div class="messages" id="messages"></div>
 
-    <section class="search-engine">
-      <div class="search-wrapper">
-        <input type="text" id="queryInput" placeholder="Ask any medical question or research topic..." autocomplete="off" aria-label="Medical search query"/>
-        <button id="askBtn" aria-label="Search">
-          <span class="btn-text">Ask AI</span>
-          <span class="btn-icon">⚡</span>
-        </button>
-      </div>
-      <div class="search-suggestions">
-        <span class="suggestion" data-query="Latest COVID-19 treatments">COVID-19 treatments</span>
-        <span class="suggestion" data-query="Diabetes management guidelines">Diabetes management</span>
-        <span class="suggestion" data-query="Cardiology research updates">Cardiology updates</span>
-      </div>
-      <div id="loading" class="loading-indicator"></div>
-    </section>
-
-    <section id="results-container">
-      <div id="ai-answer" class="answer-card"></div>
-      <div id="image-result" class="image-card"></div>
-      <div id="sources" class="sources-card"></div>
-    </section>
-
-    <section class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🤖</div>
-        <h3>AI-Powered Search</h3>
-        <p>Get instant answers from ChatGPT, Perplexity, and Google combined</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎨</div>
-        <h3>Visual Learning</h3>
-        <p>Auto-generated medical illustrations and diagrams for better understanding</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h3>Research Insights</h3>
-        <p>Latest studies, guidelines, and evidence-based medical information</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3>Real-time Results</h3>
-        <p>Get answers within seconds from multiple AI sources</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; <span id="year"></span> MED.AI – Revolutionizing medical research with AI</p>
-      <p class="disclaimer">For educational purposes only. Always consult healthcare professionals for medical advice.</p>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type your question..." />
+      <button onclick="sendMessage()">Send</button>
     </div>
-  </footer>
+  </div>
 
-  <script src="app.js"></script>
+  <script>
+    /* 🔹 Background Slideshow Script */
+    const slides = document.querySelectorAll(".slideshow img");
+    let currentSlide = 0;
+
+    function changeSlide() {
+      slides[currentSlide].classList.remove("active");
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add("active");
+    }
+    setInterval(changeSlide, 5000); // 5 sec per slide
+
+    /* 🔹 Chat Functionality */
+    const messagesDiv = document.getElementById("messages");
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.innerText = text;
+      messagesDiv.appendChild(msg);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, "user");
+      input.value = "";
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: text })
+        });
+
+        const data = await res.json();
+        if (data.answer) {
+          addMessage(data.answer, "ai");
+        } else {
+          addMessage("❌ Error: " + (data.error || "Something went wrong"), "ai");
+        }
+      } catch (err) {
+        addMessage("⚠️ Failed to connect to backend", "ai");
+      }
+    }
+  </script>
 </body>
 </html>
